@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+    <section class="p-9 container">
+
+        <h1 class="bg-info"> Randomly generated numbers for {{ body }}</h1>
+        <br>
+        {% for num in sorted_random_nums %}
+            <span class="badge badge-danger">{{ num }}</span>
+        {% endfor %}
+        {% for bonus in sorted_random_bonus %}
+            <span class="badge badge-danger">{{ bonus }}</span>
+        {% endfor %}
+
+        <p>
+        <h3>Main Number Total: <span class="badge badge-warning"> {{ tot_main_num }}</span></h3>
+        </p> 
+        <p>
+        <h3>Main Number Average: <span class="badge badge-success">{{ avg_main_nums }}</span></h3>
+        </p>
+
+        <p class="p-5">
+            <small> No guarantees these numbers will win any prize, but feel free to try them on the next draw.</small>
+            <br>
+            <small> Just refresh page to generate a new set of numbers</small>
+        </p>
+        <form action="{{ url_for('lottery.lottoIndex') }}" method="POST">
+            <p class="mx-auto">
+                <button class="btn btn-info" type="submit"> Return to Index Page </button>
+            </p>
+        </form>
+    </section>
+
+    <section class="container-fluid">
+        <h1 class="text-info"> Previous draw history for {{ body }}</h1>
+        <br>
+        <table class="table-stripped table-border">
+            <tr>
+                <th>Draw Date</th>
+                <th>Ball 1</th>
+                <th>Ball 2</th>
+                <th>Ball 3</th>
+                <th>Ball 4</th>
+                <th>Ball 5</th>
+                <th>Total</th>
+                <th>Average</th>
+                <th>Life Ball</th>
+                <th>Bonus Set</th>
+                <th>Machine</th>
+            </tr>
+            {% for item in lottery_data %}
+                <tr>
+                    <td>{{ item._id }}</td>
+                    <td>{{ item.Ball1 }}</td>
+                    <td>{{ item.Ball2 }}</td>
+                    <td>{{ item.Ball3 }}</td>
+                    <td>{{ item.Ball4 }}</td>
+                    <td>{{ item.Ball5 }}</td>
+                    <td>{{ item.Main_Total }}</td>
+                    <td>{{ item.Main_Average }}</td>
+                    <td>{{ item.LifeBall }}</td>
+                    <td>{{ item.BallSet }}</td>
+                    <td>{{ item.Machine }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </section>
+
+{% endblock %}

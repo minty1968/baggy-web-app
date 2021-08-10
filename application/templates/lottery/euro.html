@@ -1,0 +1,80 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+    <section class="p-9 container">
+
+        <h1 class="bg-info"> Randomly generated numbers for {{ body }}</h1>
+        <br>
+        {% for num in sorted_random_nums %}
+            <span class="badge badge-danger">{{ num }}</span>
+        {% endfor %}
+        {% for bonus in sorted_bonus_nums %}
+            <span class="badge badge-danger">{{ bonus }}</span>
+        {% endfor %}
+
+        <p>
+        <h3>Main Number Total and Average: <span
+                class="badge badge-primary"> {{ tot_main_num }} </span>
+            <span class="badge badge-primary"> {{ avg_main_nums }}</span>
+        </h3>
+        </p>
+        <p>
+        <h3>Bonus Number Total and Average:<span
+                class="badge badge-success"> {{ tot_bonus_num }}</span>
+            <span class="badge badge-success"> {{ avg_bonus_nums }}</span>
+        </h3>
+        </p>
+
+        <p class="p-5">
+            <small> No guarantees these numbers will win any prize, but feel free to try them on the next draw.</small>
+            <br>
+            <small> Just refresh page to generate a new set of numbers</small>
+        </p>
+        <form action="{{ url_for('lottery.lottoIndex') }}" method="POST">
+            <p class="mx-auto">
+                <button class="btn btn-info" type="submit"> Return to Index Page </button>
+            </p>
+        </form>
+    </section>
+
+    <section class="container-fluid">
+        <h1 class="text-info"> Previous draw history for {{ body }}</h1>
+        <br>
+
+        <table class="table-stripped table-border">
+            <tr>
+                <th>Draw Date</th>
+                <th>Ball 1</th>
+                <th>Ball 2</th>
+                <th>Ball 3</th>
+                <th>Ball 4</th>
+                <th>Ball 5</th>
+                <th>Main Total</th>
+                <th>Main Average</th>
+                <th>Lucky Star 1</th>
+                <th>Lucky Star 2</th>
+                <th>Lucky Star Total</th>
+                <th>Lucky Star Average</th>
+            </tr>
+            {% for item in lottery_data %}
+                <tr>
+                    <td>{{ item._id }}</td>
+                    <td>{{ item.Ball1 }}</td>
+                    <td>{{ item.Ball2 }}</td>
+                    <td>{{ item.Ball3 }}</td>
+                    <td>{{ item.Ball4 }}</td>
+                    <td>{{ item.Ball5 }}</td>
+                    <td>{{ item.Main_Total }}</td>
+                    <td>{{ item.Main_Average }}</td>
+                    <td>{{ item.LuckyStar1 }}</td>
+                    <td>{{ item.LuckyStar2 }}</td>
+                    <td>{{ item.Bonus_Total }}</td>
+                    <td>{{ item.Bonus_Average }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </section>
+
+{% endblock %}
